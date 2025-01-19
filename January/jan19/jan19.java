@@ -30,7 +30,7 @@ public class LinkedList {
         }
 
         // Step 3: Find the new tail
-        int stepsToNewTail = length - k; // Traverse (length - k) steps to find the new tail
+        int stepsToNewTail = k; // Traverse (k) steps to find the new tail
         Node newTail = head;
 
         for (int i = 1; i < stepsToNewTail; i++) {

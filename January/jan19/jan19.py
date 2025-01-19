@@ -23,7 +23,7 @@ def rotate(head, k):
         return head
 
     # Step 3: Find the new tail
-    steps_to_new_tail = length - k  # Traverse (length - k) steps to find the new tail
+    steps_to_new_tail =  k  # Traverse (k) steps to find the new tail
     new_tail = head
 
     for _ in range(steps_to_new_tail - 1):

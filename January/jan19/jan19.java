@@ -9,17 +9,37 @@ class Node {
 }
 
 public class LinkedList {
-    public Node reverseList(Node head) {
-        Node prev = null; // Initialize previous pointer
-        Node curr = head; // Start with the head of the list
+    public Node rotate(Node head, int k) {
+        if (head == null || k == 0) return head; // Handle empty list or no rotation
 
-        while (curr != null) {
-            Node nextNode = curr.next; // Store the next node
-            curr.next = prev;          // Reverse the current node's pointer
-            prev = curr;               // Move the previous pointer forward
-            curr = nextNode;           // Move the current pointer forward
+        // Step 1: Calculate length and connect the list into a circle
+        Node temp = head;
+        int length = 1;
+
+        while (temp.next != null) {
+            temp = temp.next;
+            length++;
+        }
+        temp.next = head; // Make the list circular
+
+        // Step 2: Optimize k
+        k = k % length; // If k >= length, take modulo
+        if (k == 0) {   // If no rotation is needed, break the circle and return head
+            temp.next = null;
+            return head;
         }
 
-        return prev; // New head of the reversed list
+        // Step 3: Find the new tail
+        int stepsToNewTail = length - k; // Traverse (length - k) steps to find the new tail
+        Node newTail = head;
+
+        for (int i = 1; i < stepsToNewTail; i++) {
+            newTail = newTail.next;
+        }
+
+        Node newHead = newTail.next; // New head is the next of new tail
+        newTail.next = null;         // Break the circle
+
+        return newHead; // Return the new head of the rotated list
     }
 }

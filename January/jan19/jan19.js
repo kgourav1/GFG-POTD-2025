@@ -26,7 +26,7 @@ function rotate(head, k) {
     }
 
     // Step 3: Find the new tail
-    let stepsToNewTail = length - k; // Traverse (length - k) steps to find the new tail
+    let stepsToNewTail = k; // Traverse (k) steps to find the new tail
     let newTail = head;
 
     for (let i = 1; i < stepsToNewTail; i++) {

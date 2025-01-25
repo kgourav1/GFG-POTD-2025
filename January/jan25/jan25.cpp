@@ -1,25 +1,29 @@
-// Function to detect the first node of the loop
-Node* detectCycleStart(Node* head) {
-    if (!head || !head->next) return nullptr; // No loop if the list is empty or has one node
+struct Node {
+    int data;
+    Node* next;
+    Node(int x) : data(x), next(nullptr) {}
+};
 
-    Node* slow = head;
-    Node* fast = head;
+Node* findFirstNode(Node* head) {
+    Node* slow = head; // Initialize the slow pointer
+    Node* fast = head; // Initialize the fast pointer
 
-    // Step 1: Detect the loop using Floyd’s Cycle Detection Algorithm
-    while (fast && fast->next) {
-        slow = slow->next;         // Move slow pointer by 1 step
-        fast = fast->next->next;   // Move fast pointer by 2 steps
-
-        if (slow == fast) { // Loop detected
-            // Step 2: Find the start of the loop
-            Node* entry = head; // Start one pointer from the head
-            while (entry != slow) {
-                entry = entry->next; // Move both pointers one step
-                slow = slow->next;
-            }
-            return entry; // The first node in the loop
-        }
+    // Step 1: Detect if there is a cycle using slow and fast pointers
+    while (fast != NULL && fast->next != NULL) {
+        slow = slow->next; // Move slow pointer by one step
+        fast = fast->next->next; // Move fast pointer by two steps
+        if (slow == fast) break; // Cycle detected
     }
 
-    return nullptr; // No loop
+    // Step 2: If no cycle is detected, return -1
+    if (slow != fast) return new Node(-1);
+
+    // Step 3: Find the first node of the cycle
+    slow = head; // Reset slow pointer to the head
+    while (slow != fast) {
+        slow = slow->next; // Move both pointers one step at a time
+        fast = fast->next;
+    }
+
+    return fast; // The first node of the cycle
 }
